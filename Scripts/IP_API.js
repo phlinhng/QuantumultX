@@ -5,7 +5,7 @@ if ($response.statusCode != 200) {
 const chs=Array.from("约亚济脱韩汤乌奥维韦岛诺开门伦库国圣买宾东兰爱马萨罗内赞别宁叙纳来鲜兹缅刚苏贝里麦湾扎属卢冈几莱尔挝关鲁达联长腊时")
 const cht=Array.from("約亞濟脫韓湯烏奧維韋島諾開門倫庫國聖買賓東蘭愛馬薩羅內讚別寧敘納來鮮茲緬剛蘇貝裏麥灣紮屬盧岡幾萊爾撾關魯達聯長臘時")
 const character = new Map()
-chs.forEach( (key,index) => character.set(key, chs[index]) )
+chs.forEach( (key,index) => character.set(key, cht[index]) )
 
 function toCHT(string) {
   var string_cht = ""
