@@ -52,7 +52,7 @@ var flags = new Map([[ "AC" , "🇦🇨" ] , [ "AF" , "🇦🇫" ] , [ "AI" , "�
 var body = $response.body;
 var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
-var subtitle = City_ValidCheck(obj['city'])+'-'+'('+ ISP_ValidCheck(obj['org'])+')';
+var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ISP_ValidCheck(obj['org'])+')';
 var ip = obj['query'];
 var description = '服務商:'+obj['isp'] + '\n'+'地區:' +City_ValidCheck(obj['regionName'])+ '\n' + 'IP:'+ obj['query'] + '\n' +'时區:'+ obj['timezone'];
 $done({title, subtitle, ip, description});
