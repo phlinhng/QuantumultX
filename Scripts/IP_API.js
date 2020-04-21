@@ -29,8 +29,8 @@ function ISP_ValidCheck(para) {
   return para? para:isp0;
 }
 
-function ORG_ValidCheck(para) {
-  return para? para:ISP_ValidCheck(para);
+function ORG_ValidCheck(para_org,para_isp) {
+  return para_org? para_org:ISP_ValidCheck(para_isp);
 }
 
 function Area_check(para) {
@@ -41,8 +41,8 @@ var flags = new Map([[ "AC" , "🇦🇨" ] , [ "AF" , "🇦🇫" ] , [ "AI" , "�
 var body = $response.body;
 var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
-var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'])+')';
+var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp']))+')';
 var ip = obj['query'];
-var descriptions = [ obj['query'], ORG_ValidCheck(obj['org']), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
+var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp'])), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
 var description = descriptions.join('\n');
 $done({title, subtitle, ip, description});
