@@ -29,6 +29,10 @@ function ISP_ValidCheck(para) {
   return para? para:isp0
 }
 
+function ORG_ValidCheck(para) {
+  return para? para:ISP_ValidCheck(para)
+}
+
 function Area_check(para) {
   return para=="中华民国"? "台灣":toCHT(para)
 }
@@ -36,7 +40,7 @@ var flags = new Map([[ "AC" , "🇦🇨" ] , [ "AF" , "🇦🇫" ] , [ "AI" , "�
 var body = $response.body;
 var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
-var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ISP_ValidCheck(obj['isp'])+')';
+var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'])+')';
 var ip = obj['query'];
-var description = obj['query']+'\n' + 'ISP: '+obj['isp']+'\n' + City_ValidCheck(obj['city'])+','+Region_ValidCheck(obj['regionName'])+' '+flags.get(obj['countryCode'])+'\n';
+var description = obj['query']+'\n' + Area_check(obj['country'])+flags.get(obj['countryCode'])+'\n' + ORG_ValidCheck(obj['org'])+'\n' + City_ValidCheck(obj['city'])+' ,'+Region_ValidCheck(obj['regionName']);
 $done({title, subtitle, ip, description});
