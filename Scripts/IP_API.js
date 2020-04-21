@@ -13,31 +13,20 @@ function toCHT(string) {
   return string_cht
 }
 
-const emojis= ['🆘','🈲','⚠️','🔞','📵','🚦','🏖','🖥','📺','🐧','🐬','🦉','🍄','⛳️','🚴','🤑','👽','🤖','🎃', '👺', '👁', '🐶', '🐼','🐌', '👥']
-var city0 = "高譚市";
+var region0 = "Lalaland";
+var city0 = "Mega City";
 var isp0 = "Cross-GFW.org";
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
+
+function Region_ValidCheck(para) {
+  return para? para:region0
 }
 
 function City_ValidCheck(para) {
-  if(para) {
-  return para
-  } else
-  {
-  return city0
-//emojis[getRandomInt(emojis.length)]
-  }
+  return para? para:city0
 }
 
 function ISP_ValidCheck(para) {
-  if(para) {
-  return para
-  } else
-  {
-  return isp0
-//emojis[getRandomInt(emojis.length)]
-  }
+  return para? para:isp0
 }
 
 function Area_check(para) {
@@ -54,5 +43,5 @@ var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
 var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ISP_ValidCheck(obj['isp'])+')';
 var ip = obj['query'];
-var description = '服務商:'+obj['isp'] + '\n'+'地區:' +City_ValidCheck(obj['regionName'])+ '\n' + 'IP:'+ obj['query'] + '\n' +'時區:'+ obj['timezone'];
+var description = obj['query']+'\n' + 'ISP: '+obj['isp']+'\n' + City_ValidCheck(obj['city'])+','+Region_ValidCheck(obj['regionName'])+' '+flags.get(obj['countryCode'])+'\n';
 $done({title, subtitle, ip, description});
