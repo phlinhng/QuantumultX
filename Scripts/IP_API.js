@@ -46,8 +46,8 @@ var flags = new Map([[ "AC" , "🇦🇨" ] , [ "AF" , "🇦🇫" ] , [ "AI" , "�
 var body = $response.body;
 var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
-var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'],obj['isp'])+')';
+var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp']))+')';
 var ip = obj['query'];
-var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],obj['isp']), AS_ValidCheck(obj['as']), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
+var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp'])), AS_ValidCheck(obj['as']), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
 var description = descriptions.join('\n');
 $done({title, subtitle, ip, description});
