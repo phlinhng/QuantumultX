@@ -16,6 +16,7 @@ function toCHT(string) {
 var region0 = "Lalaland";
 var city0 = "Mega City";
 var isp0 = "Cross-GFW.org";
+var as0 = "AS77777 Not Found";
 
 function Region_ValidCheck(para) {
   return para? para:region0;
@@ -33,6 +34,10 @@ function ORG_ValidCheck(para_org,para_isp) {
   return para_org? para_org:ISP_ValidCheck(para_isp);
 }
 
+function AS_ValidCheck(para) {
+  return para? para:as0;
+}
+
 function Area_check(para) {
   return para=="中华民国"? "台灣":toCHT(para);
 }
@@ -43,6 +48,6 @@ var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
 var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp']))+')';
 var ip = obj['query'];
-var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp'])), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
+var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp'])), AS_ValidCheck(obj['as']), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
 var description = descriptions.join('\n');
 $done({title, subtitle, ip, description});
