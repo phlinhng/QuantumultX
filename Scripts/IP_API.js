@@ -43,6 +43,6 @@ var obj = JSON.parse(body);
 var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
 var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'])+')';
 var ip = obj['query'];
-var descriptions = [ obj['query'], ORG_ValidCheck(obj['org']), City_ValidCheck(obj['city'])+' ,'+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+flags.get(obj['countryCode']) ];
+var descriptions = [ obj['query'], ORG_ValidCheck(obj['org']), City_ValidCheck(obj['city'])+' ,'+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
 var description = descriptions.join('\n');
 $done({title, subtitle, ip, description});
