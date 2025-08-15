@@ -39,15 +39,44 @@ function AS_ValidCheck(para) {
 }
 
 function Area_check(para) {
+  if (!para) return '';
   return para=="中华民国"? "台灣":toCHT(para);
 }
 
-var flags = new Map([[ "AC" , "🇦🇨" ] , [ "AF" , "🇦🇫" ] , [ "AI" , "🇦🇮" ] , [ "AL" , "🇦🇱" ] , [ "AM" , "🇦🇲" ] , [ "AQ" , "🇦🇶" ] , [ "AR" , "🇦🇷" ] , [ "AS" , "🇦🇸" ] , [ "AT" , "🇦🇹" ] , [ "AU" , "🇦🇺" ] , [ "AW" , "🇦🇼" ] , [ "AX" , "🇦🇽" ] , [ "AZ" , "🇦🇿" ] , [ "BB" , "🇧🇧" ] , [ "BD" , "🇧🇩" ] , [ "BE" , "🇧🇪" ] , [ "BF" , "🇧🇫" ] , [ "BG" , "🇧🇬" ] , [ "BH" , "🇧🇭" ] , [ "BI" , "🇧🇮" ] , [ "BJ" , "🇧🇯" ] , [ "BM" , "🇧🇲" ] , [ "BN" , "🇧🇳" ] , [ "BO" , "🇧🇴" ] , [ "BR" , "🇧🇷" ] , [ "BS" , "🇧🇸" ] , [ "BT" , "🇧🇹" ] , [ "BV" , "🇧🇻" ] , [ "BW" , "🇧🇼" ] , [ "BY" , "🇧🇾" ] , [ "BZ" , "🇧🇿" ] , [ "CA" , "🇨🇦" ] , [ "CF" , "🇨🇫" ] , [ "CH" , "🇨🇭" ] , [ "CK" , "🇨🇰" ] , [ "CL" , "🇨🇱" ] , [ "CM" , "🇨🇲" ] , [ "CN" , "🇨🇳" ] , [ "CO" , "🇨🇴" ] , [ "CP" , "🇨🇵" ] , [ "CR" , "🇨🇷" ] , [ "CU" , "🇨🇺" ] , [ "CV" , "🇨🇻" ] , [ "CW" , "🇨🇼" ] , [ "CX" , "🇨🇽" ] , [ "CY" , "🇨🇾" ] , [ "CZ" , "🇨🇿" ] , [ "DE" , "🇩🇪" ] , [ "DG" , "🇩🇬" ] , [ "DJ" , "🇩🇯" ] , [ "DK" , "🇩🇰" ] , [ "DM" , "🇩🇲" ] , [ "DO" , "🇩🇴" ] , [ "DZ" , "🇩🇿" ] , [ "EA" , "🇪🇦" ] , [ "EC" , "🇪🇨" ] , [ "EE" , "🇪🇪" ] , [ "EG" , "🇪🇬" ] , [ "EH" , "🇪🇭" ] , [ "ER" , "🇪🇷" ] , [ "ES" , "🇪🇸" ] , [ "ET" , "🇪🇹" ] , [ "EU" , "🇪🇺" ] , [ "FI" , "🇫🇮" ] , [ "FJ" , "🇫🇯" ] , [ "FK" , "🇫🇰" ] , [ "FM" , "🇫🇲" ] , [ "FO" , "🇫🇴" ] , [ "FR" , "🇫🇷" ] , [ "GA" , "🇬🇦" ] , [ "GB" , "🇬🇧" ] , [ "HK" , "🇭🇰" ] , [ "ID" , "🇮🇩" ] , [ "IE" , "🇮🇪" ] , [ "IL" , "🇮🇱" ] , [ "IM" , "🇮🇲" ] , [ "IN" , "🇮🇳" ] , [ "IS" , "🇮🇸" ] , [ "IT" , "🇮🇹" ] , [ "JP" , "🇯🇵" ] , [ "KR" , "🇰🇷" ] , [ "MO" , "🇲🇴" ] , [ "MX" , "🇲🇽" ] , [ "MY" , "🇲🇾" ] , [ "NL" , "🇳🇱" ] , [ "PH" , "🇵🇭" ] , [ "RO" , "🇷🇴" ] , [ "RS" , "🇷🇸" ] , [ "RU" , "🇷🇺" ] , [ "RW" , "🇷🇼" ] , [ "SA" , "🇸🇦" ] , [ "SB" , "🇸🇧" ] , [ "SC" , "🇸🇨" ] , [ "SD" , "🇸🇩" ] , [ "SE" , "🇸🇪" ] , [ "SG" , "🇸🇬" ] , [ "TH" , "🇹🇭" ] , [ "TN" , "🇹🇳" ] , [ "TO" , "🇹🇴" ] , [ "TR" , "🇹🇷" ] , [ "TV" , "🇹🇻" ] , [ "TW" , "🇹🇼" ] , [ "UK" , "🇬🇧" ] , [ "UM" , "🇺🇲" ] , [ "US" , "🇺🇸" ] , [ "UY" , "🇺🇾" ] , [ "UZ" , "🇺🇿" ] , [ "VA" , "🇻🇦" ] , [ "VE" , "🇻🇪" ] , [ "VG" , "🇻🇬" ] , [ "VI" , "🇻🇮" ] , [ "VN" , "🇻🇳" ] , [ "ZA" , "🇿🇦"]])
-var body = $response.body;
-var obj = JSON.parse(body);
-var title =flags.get(obj['countryCode']) + ' '+ Area_check(obj['country']);
-var subtitle = City_ValidCheck(obj['city'])+' '+'('+ ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp']))+')';
-var ip = obj['query'];
-var descriptions = [ obj['query'], ORG_ValidCheck(obj['org'],ISP_ValidCheck(obj['isp'])), AS_ValidCheck(obj['as']), City_ValidCheck(obj['city'])+',  '+Region_ValidCheck(obj['regionName']),  Area_check(obj['country'])+' '+flags.get(obj['countryCode']) ];
-var description = descriptions.join('\n');
+function flagFromISO(cc) {
+  if (!cc) return '';                      // 没有就返回空
+  cc = String(cc).trim().toUpperCase();    // 规范化
+  if (!/^[A-Z]{2}$/.test(cc)) return '';   // 必须是两位英文字母
+  // 把 'A'..'Z' 转成区域指示符 U+1F1E6..U+1F1FF
+  return String.fromCodePoint(
+    ...cc.split('').map(ch => 0x1F1E6 + (ch.charCodeAt(0) - 65))
+  );
+}
+
+function joinTight(...parts) {
+  return parts.filter(Boolean).join(' ');
+}
+
+const body = $response.body;
+const obj = JSON.parse(body);
+
+const countrycode = (obj['countryCode'] || '').trim().toUpperCase();
+const safeFlag = flagFromISO(countrycode) || '🇦🇶';
+
+const title = safeFlag + ' '+ Area_check(obj['country']);
+const subtitle = joinTight(
+  City_ValidCheck(obj.city),
+  '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')'
+);
+const ip = obj['query'];
+
+const descriptions = [
+  obj.query,
+  ORG_ValidCheck(obj['org'], ISP_ValidCheck(obj['isp'])),
+  AS_ValidCheck(obj['as']),
+  City_ValidCheck(obj['city']) + ',  ' + Region_ValidCheck(obj['regionName']),
+  Area_check(obj['country']) + ' ' + safeFlag
+];
+const description = descriptions.join('\n');
+
 $done({title, subtitle, ip, description});
