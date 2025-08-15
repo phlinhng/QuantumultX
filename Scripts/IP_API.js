@@ -71,11 +71,11 @@ const subtitle = joinTight(
 const ip = obj['query'];
 
 const descriptions = [
-  obj.query,
+  ip,
   ORG_ValidCheck(obj['org'], ISP_ValidCheck(obj['isp'])),
   AS_ValidCheck(obj['as']),
   City_ValidCheck(obj['city']) + ',  ' + Region_ValidCheck(obj['regionName']),
-  Area_check(obj['country']) + ' ' + safeFlag
+  safeFlag + ' ' + Area_check(obj['country'])
 ];
 const description = descriptions.join('\n');
 
