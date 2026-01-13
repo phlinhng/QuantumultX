@@ -63,7 +63,7 @@ const body = $response.body;
 const obj = JSON.parse(body);
 
 const countrycode = (obj['countryCode'] || '').trim().toUpperCase();
-const safeFlag = flagFromISO(countrycode) || '🇦🇶';
+const safeFlag = flagFromISO(countrycode) || '🇺🇳';
 
 const proxyStatus = [
   obj['proxy'] && '🛡️',
