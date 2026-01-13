@@ -1,3 +1,5 @@
+// http://ip-api.com/json/{query}?fields=1691189
+
 if ($response.statusCode != 200) {
   $done(null);
 }
@@ -63,10 +65,17 @@ const obj = JSON.parse(body);
 const countrycode = (obj['countryCode'] || '').trim().toUpperCase();
 const safeFlag = flagFromISO(countrycode) || '🇦🇶';
 
+const proxyStatus = [
+  obj.proxy && '🛡️',
+  obj.hosting && '🌐',
+].filter(Boolean).join(' ');
+
 const title = safeFlag + ' '+ Area_check(obj['country']);
+
 const subtitle = joinTight(
   City_ValidCheck(obj.city),
-  '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')'
+  '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')',
+  proxyStatus && proxyStatus
 );
 const ip = obj['query'];
 
