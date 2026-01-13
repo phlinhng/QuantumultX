@@ -66,21 +66,22 @@ const countrycode = (obj['countryCode'] || '').trim().toUpperCase();
 const safeFlag = flagFromISO(countrycode) || '🇦🇶';
 
 const proxyStatus = [
-  obj.proxy && '🛡️',
-  obj.hosting && '🌐',
-].filter(Boolean).join(' ');
+  obj['proxy'] && '🛡️',
+  obj['hosting'] && '🌐',
+].filter(Boolean).join('');
 
-const title = safeFlag + ' '+ Area_check(obj['country']);
+const title = joinTight(safeFlag, Area_check(obj['country']), proxyStatus)
 
 const subtitle = joinTight(
   City_ValidCheck(obj.city),
   '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')',
-  proxyStatus && proxyStatus
+  proxyStatus
 );
+
 const ip = obj['query'];
 
 const descriptions = [
-  ip,
+  joinTight(obj['query'], proxyStatus),
   ORG_ValidCheck(obj['org'], ISP_ValidCheck(obj['isp'])),
   AS_ValidCheck(obj['as']),
   City_ValidCheck(obj['city']) + ',  ' + Region_ValidCheck(obj['regionName']),
