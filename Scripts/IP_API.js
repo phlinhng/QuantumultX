@@ -74,8 +74,7 @@ const title = joinTight(safeFlag, Area_check(obj['country']), proxyStatus)
 
 const subtitle = joinTight(
   City_ValidCheck(obj.city),
-  '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')',
-  proxyStatus
+  '(' + ORG_ValidCheck(obj.org, ISP_ValidCheck(obj.isp)) + ')'
 );
 
 const ip = obj['query'];
