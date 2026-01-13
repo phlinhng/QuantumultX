@@ -62,7 +62,7 @@ function joinTight(...parts) {
 const body = $response.body;
 const obj = JSON.parse(body);
 
-const countrycode = (obj['countryCode'] || '').trim().toUpperCase();
+const countrycode = (obj.countryCode || '').trim().toUpperCase();
 const safeFlag = flagFromISO(countrycode) || '🇺🇳';
 
 const proxyStatus = [
@@ -70,21 +70,21 @@ const proxyStatus = [
   obj['hosting'] && '🌐',
 ].filter(Boolean).join('');
 
-const title = joinTight(safeFlag, Area_check(obj['country']), proxyStatus)
+const title = joinTight(safeFlag, Area_check(obj.country), proxyStatus)
 
 const subtitle = joinTight(
   City_ValidCheck(obj.city),
-  '(' + ORG_ValidCheck(obj['org'], obj['isp']) + ')'
+  '(' + ORG_ValidCheck(obj.org, obj.isp) + ')'
 );
 
-const ip = obj['query'];
+const ip = obj.query;
 
 const descriptions = [
-  joinTight(obj['query'], proxyStatus),
-  ORG_ValidCheck(obj['org'], obj['isp']),
-  AS_ValidCheck(obj['as']),
-  City_ValidCheck(obj['city']) + ',  ' + Region_ValidCheck(obj['regionName']),
-  safeFlag + ' ' + Area_check(obj['country'])
+  joinTight(obj.query, proxyStatus),
+  ORG_ValidCheck(obj.org, obj.isp),
+  AS_ValidCheck(obj.as),
+  City_ValidCheck(obj.city) + ',  ' + Region_ValidCheck(obj.regionName),
+  safeFlag + ' ' + Area_check(obj.country)
 ];
 const description = descriptions.join('\n');
 
